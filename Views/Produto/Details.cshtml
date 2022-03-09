@@ -1,0 +1,43 @@
+﻿@model ImagensProjeto.Models.Produto
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+<h1>Detalhes de Produto</h1>
+<hr />
+<div class="row">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Nome" class="control-label"></label>
+        <input asp-for="Nome" class="form-control" readonly />
+        <span asp-validation-for="Nome" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Valor" class="control-label"></label>
+        <input asp-for="Valor" class="form-control" readonly/>
+    </div>
+    <div class="form-group">
+        @{
+            try
+            {
+                var base64 = Convert.ToBase64String(Model.Foto);
+                if(!string.IsNullOrEmpty(base64))
+                {
+                    var ImgSrc = String
+                    .Format("data:image/png;base64, {0}", base64);
+                    <img class="img-fluid" src="@ImgSrc" width="300" style="margin-top:20px" />
+                }
+            }
+            catch
+            {
+                //falha na imagem
+                <img class="img-fluid" src="https://st2.depositphotos.com/2668729/6825/v/450/depositphotos_68256123-stock-illustration-forbidden-signal-with-a-photo.jpg"
+                width="150" />
+            }
+            <div class="form-group" style="margin-top:10px">
+                <a type="submit" value="Editar" class="btn btn-outline-primary btn-sm" asp-action="Edit" asp-route-id="@Model.Id"> Editar </a>
+                <a class="btn btn-secondary text-white btn-sm" asp-action="Index"> Voltar</a>
+            </div>
+        }
+    </div>
+</div>

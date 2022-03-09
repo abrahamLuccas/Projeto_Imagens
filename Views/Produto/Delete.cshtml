@@ -1,0 +1,50 @@
+﻿@model ImagensProjeto.Models.Produto
+
+@{
+    ViewData["Title"] = "Apagar Produto";
+}
+<h1> Apagar Produto</h1>
+<h3> Você tem certeza que deseja apagar este produto?</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" readonly/>
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Valor" class="control-label"></label>
+                <input asp-for="Valor" class="form-control" readonly />
+                <span asp-validation-for="Valor" class="text-danger"></span>
+            </div>
+            
+             <div class="form-group">
+                @{
+            try
+            {
+                var base64 = Convert.ToBase64String(Model.Foto);
+                if(!string.IsNullOrEmpty(base64))
+                {
+                    var ImgSrc = String.Format("data:image/png;base64, {0}", base64);
+                    <img class="img-fluid" src="@ImgSrc" width="300" style="margin-top:20px" />
+                }
+            }
+            catch
+            {
+                //falha na imagem
+                <img class="img-fluid" src="https://st2.depositphotos.com/2668729/6825/v/450/depositphotos_68256123-stock-illustration-forbidden-signal-with-a-photo.jpg"
+                width="150" />
+            }
+            }
+            </div>
+            <form asp-action="Delete" style="margin-top:10px">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Apagar" class="btn btn-danger btn-sm"  />
+                <a class="btn btn-secondary text-white btn-sm" asp-action="Index"> Voltar </a>
+            </form>
+    </div>
+</div>
+
